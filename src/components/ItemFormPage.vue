@@ -1,59 +1,68 @@
 <template>
-  <div class="min-h-screen bg-gray-50 flex items-center justify-center p-6">
-    <div class="w-full max-w-xl bg-white p-8 rounded-2xl shadow">
-      <h2 class="text-2xl font-bold text-center text-gray-800 mb-6">
-        {{ isEditMode ? '✏️ Edit Item' : '➕ Add Item' }}
+  <div class="min-h-screen bg-gradient-to-br from-gray-50 to-blue-100 p-6">
+    <div class="max-w-xl mx-auto bg-white shadow-lg rounded-xl p-8">
+      <h2 class="text-2xl font-bold text-blue-800 mb-6 text-center">
+        {{ isEditMode ? '✏️ Edit Item' : '➕ Add New Item' }}
       </h2>
-
-      <form @submit.prevent="submitForm" class="space-y-5">
+      <form @submit.prevent="saveItem" class="space-y-5">
+        <!-- Name -->
         <div>
-          <label class="block text-sm font-medium text-gray-700 mb-1">Item Name</label>
+          <label for="name" class="block text-sm font-semibold text-gray-700 mb-1">Item Name</label>
           <input
-            v-model="form.name"
+            v-model="item.name"
             type="text"
+            id="name"
+            class="w-full rounded-lg border-gray-300 focus:border-blue-500 focus:ring-blue-500 shadow-sm"
             required
-            class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
         </div>
 
+        <!-- Quantity -->
         <div>
-          <label class="block text-sm font-medium text-gray-700 mb-1">Quantity</label>
+          <label for="quantity" class="block text-sm font-semibold text-gray-700 mb-1">Quantity</label>
           <input
-            v-model.number="form.quantity"
+            v-model="item.quantity"
             type="number"
+            id="quantity"
+            class="w-full rounded-lg border-gray-300 focus:border-blue-500 focus:ring-blue-500 shadow-sm"
             required
-            class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
         </div>
 
+        <!-- Date -->
         <div>
-          <label class="block text-sm font-medium text-gray-700 mb-1">Purchase Date</label>
+          <label for="date" class="block text-sm font-semibold text-gray-700 mb-1">Date</label>
           <input
-            v-model="form.purchaseDate"
+            v-model="item.date"
             type="date"
+            id="date"
+            class="w-full rounded-lg border-gray-300 focus:border-blue-500 focus:ring-blue-500 shadow-sm"
             required
-            class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
         </div>
 
+        <!-- Type -->
         <div>
-          <label class="block text-sm font-medium text-gray-700 mb-1">Storage Type</label>
+          <label for="type" class="block text-sm font-semibold text-gray-700 mb-1">Storage Type</label>
           <select
-            v-model="form.storage"
+            v-model="item.type"
+            id="type"
+            class="w-full rounded-lg border-gray-300 focus:border-blue-500 focus:ring-blue-500 shadow-sm"
             required
-            class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
           >
+            <option value="">Select Type</option>
             <option value="fridge">Fridge</option>
             <option value="freezer">Freezer</option>
           </select>
         </div>
 
+        <!-- Save Button -->
         <div class="pt-4">
           <button
             type="submit"
-            class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg transition"
+            class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-xl shadow transition duration-200 w-full"
           >
-            {{ isEditMode ? 'Update Item' : 'Add Item' }}
+            Save
           </button>
         </div>
       </form>
@@ -66,37 +75,37 @@ export default {
   name: 'ItemFormPage',
   data() {
     return {
-      form: {
+      item: {
         name: '',
         quantity: 1,
-        purchaseDate: '',
-        storage: 'fridge'
-      },
-      isEditMode: false
+        date: '',
+        type: '',
+      }
     };
   },
+  computed: {
+    isEditMode() {
+      return !!this.$route.params.id;
+    }
+  },
   mounted() {
-    const itemId = this.$route.query.id;
-    if (itemId) {
-      this.isEditMode = true;
-      // In real case: fetch item by id and populate form
-      const dummyItem = {
-        id: itemId,
+    if (this.isEditMode) {
+      const id = this.$route.params.id;
+      // You can replace this mock with an API call or Vuex state
+      const exampleItem = {
+        id: id,
         name: 'Example Item',
-        quantity: 3,
-        purchaseDate: '2025-05-01',
-        storage: 'fridge'
+        quantity: 5,
+        date: '2025-05-06',
+        type: 'fridge'
       };
-      this.form = { ...dummyItem };
+      this.item = { ...exampleItem };
     }
   },
   methods: {
-    submitForm() {
-      if (this.isEditMode) {
-        alert('Item updated!');
-      } else {
-        alert('Item added!');
-      }
+    saveItem() {
+      // Replace this with real API logic
+      console.log('Item saved:', this.item);
       this.$router.push('/inventory');
     }
   }

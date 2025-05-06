@@ -1,44 +1,42 @@
 <template>
-  <div class="min-h-screen bg-gray-100 p-6">
-    <div class="max-w-3xl mx-auto bg-white rounded-2xl shadow-xl p-8">
-      <h2 class="text-2xl font-bold mb-6 text-center text-gray-800">🧾 OCR Receipt Details</h2>
+  <div class="min-h-screen bg-gradient-to-br from-gray-50 to-blue-100 p-6">
+    <div class="max-w-3xl mx-auto bg-white shadow-xl rounded-xl p-8">
+      <h2 class="text-2xl font-bold text-blue-800 mb-6 text-center">📋 OCR Receipt Details</h2>
 
-      <div class="overflow-x-auto">
-        <table class="min-w-full text-left border-collapse">
-          <thead class="bg-gray-200 text-sm font-semibold">
-            <tr>
-              <th class="px-4 py-2">Item</th>
-              <th class="px-4 py-2">Quantity</th>
-              <th class="px-4 py-2">Purchase Date</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr
-              v-for="(item, index) in receiptItems"
-              :key="index"
-              class="border-b hover:bg-gray-50"
-            >
-              <td class="px-4 py-2">{{ item.name }}</td>
-              <td class="px-4 py-2">{{ item.quantity }}</td>
-              <td class="px-4 py-2">{{ item.date }}</td>
-            </tr>
-          </tbody>
-        </table>
+      <!-- Item List -->
+      <div v-if="items.length > 0" class="space-y-4">
+        <div
+          v-for="(item, index) in items"
+          :key="index"
+          class="bg-gray-50 border border-gray-200 rounded-lg shadow-sm p-4 flex justify-between items-center"
+        >
+          <div>
+            <p class="font-semibold text-gray-800">{{ item.name }}</p>
+            <p class="text-sm text-gray-600">Quantity: {{ item.quantity }}</p>
+            <p class="text-xs text-gray-500">Date: {{ item.date }}</p>
+          </div>
+          <button
+            @click="addToInventory(item)"
+            class="bg-blue-600 text-white px-4 py-2 rounded-lg shadow hover:bg-blue-700 transition"
+          >
+            Add
+          </button>
+        </div>
       </div>
 
-      <div class="mt-6 flex justify-end space-x-4">
-        <button
-          class="bg-gray-500 text-white py-2 px-4 rounded-lg hover:bg-gray-600 transition"
-          @click="goBack"
+      <!-- No Items -->
+      <div v-else class="text-center text-gray-500 mt-8">
+        No items extracted. Please upload a valid receipt first.
+      </div>
+
+      <!-- Go Back -->
+      <div class="mt-10 text-center">
+        <router-link
+          to="/ocr-upload"
+          class="text-blue-600 hover:underline text-sm"
         >
-          Cancel
-        </button>
-        <button
-          class="bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 transition"
-          @click="confirmItems"
-        >
-          Confirm & Add to Inventory
-        </button>
+          ⬅️ Back to Upload
+        </router-link>
       </div>
     </div>
   </div>
@@ -46,24 +44,21 @@
 
 <script>
 export default {
-  name: 'OCRDetailPage',
+  name: "OCRDetailPage",
   data() {
     return {
-      receiptItems: [
-        { name: 'Milk', quantity: 2, date: '2025-05-06' },
-        { name: 'Eggs', quantity: 1, date: '2025-05-05' },
-        { name: 'Frozen Dumplings', quantity: 3, date: '2025-05-04' }
+      items: [
+        { name: "Milk", quantity: 2, date: "2025-05-01" },
+        { name: "Bread", quantity: 1, date: "2025-05-02" },
+        { name: "Eggs", quantity: 12, date: "2025-05-03" }
       ]
     };
   },
   methods: {
-    goBack() {
-      this.$router.push('/ocr-upload');
-    },
-    confirmItems() {
-      // In real logic, send the data to backend here
-      alert('Items confirmed and added to inventory!');
-      this.$router.push('/inventory');
+    addToInventory(item) {
+      // Placeholder logic
+      alert(`Added ${item.name} to inventory.`);
+      this.$router.push("/inventory");
     }
   }
 };

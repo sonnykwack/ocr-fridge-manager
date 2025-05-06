@@ -1,42 +1,34 @@
 <template>
-  <div class="min-h-screen flex items-center justify-center bg-gray-100 p-6">
-    <div class="bg-white w-full max-w-md rounded-2xl shadow-xl p-8">
-      <h2 class="text-3xl font-bold text-center text-gray-800 mb-6">🔐 Login</h2>
-
-      <form @submit.prevent="handleLogin" class="space-y-5">
+  <div class="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-100 via-white to-blue-300">
+    <div class="bg-white/40 backdrop-blur-lg shadow-2xl rounded-2xl p-8 max-w-md w-full border border-white/30">
+      <h2 class="text-2xl font-bold text-center text-blue-800 mb-6">🔐 Login to Your Fridge</h2>
+      
+      <form @submit.prevent="login" class="space-y-4">
         <div>
-          <label class="block text-sm font-medium text-gray-700 mb-1">Email</label>
+          <label class="block text-sm font-medium text-gray-700">Username</label>
           <input
-            v-model="email"
-            type="email"
-            required
-            class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            v-model="username"
+            type="text"
+            class="mt-1 w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500"
+            placeholder="Enter your username"
           />
         </div>
-
         <div>
-          <label class="block text-sm font-medium text-gray-700 mb-1">Password</label>
+          <label class="block text-sm font-medium text-gray-700">Password</label>
           <input
             v-model="password"
             type="password"
-            required
-            class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            class="mt-1 w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500"
+            placeholder="Enter your password"
           />
         </div>
-
-        <div class="pt-2">
-          <button
-            type="submit"
-            class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg transition"
-          >
-            Login
-          </button>
-        </div>
+        <button
+          type="submit"
+          class="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-xl shadow transition duration-200"
+        >
+          Login
+        </button>
       </form>
-
-      <div class="mt-6 text-center text-sm text-gray-500">
-        © 2025 OCR Fridge Manager. All rights reserved.
-      </div>
     </div>
   </div>
 </template>
@@ -46,19 +38,18 @@ export default {
   name: 'LoginFormPage',
   data() {
     return {
-      email: '',
+      username: '',
       password: ''
-    };
+    }
   },
   methods: {
-    handleLogin() {
-      if (this.email && this.password) {
-        // Dummy login logic
+    login() {
+      if (this.username && this.password) {
         this.$router.push('/inventory');
       } else {
-        alert('Please enter valid credentials');
+        alert('Please enter your username and password.');
       }
     }
   }
-};
+}
 </script>

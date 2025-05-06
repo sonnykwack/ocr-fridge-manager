@@ -1,7 +1,5 @@
 <template>
-  <div class="min-h-screen bg-gray-100">
-    <router-view />
-  </div>
+  <router-view />
 </template>
 
 <script>
@@ -11,5 +9,5 @@ export default {
 </script>
 
 <style>
-/* If you're using Tailwind, this can stay empty or include global CSS */
+/* You can leave this empty if using Tailwind */
 </style>

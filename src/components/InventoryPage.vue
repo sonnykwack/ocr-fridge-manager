@@ -1,77 +1,83 @@
 <template>
-  <div class="p-6">
-    <div class="flex justify-between items-center mb-6">
-      <h1 class="text-2xl font-bold">🧊 Inventory</h1>
-      <router-link
-        to="/item-form"
-        class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
-      >
-        ➕ Add Item
-      </router-link>
-    </div>
-
-    <!-- Fridge Section -->
-    <div class="mb-8">
-      <h2 class="text-xl font-semibold mb-2">🧺 Fridge</h2>
-      <ul>
-        <li
-          v-for="item in fridgeItems"
-          :key="item.id"
-          class="bg-white rounded p-4 mb-2 shadow flex justify-between"
+  <div class="p-6 bg-gradient-to-br from-gray-50 to-blue-100 min-h-screen">
+    <div class="max-w-5xl mx-auto">
+      <div class="flex justify-between items-center mb-8">
+        <h1 class="text-3xl font-bold text-blue-800">🧊 Inventory</h1>
+        <router-link
+          to="/item-form"
+          class="bg-blue-600 hover:bg-blue-700 text-white px-5 py-2 rounded-xl shadow transition duration-200"
         >
-          <div>
-            <p class="font-semibold">{{ item.name }}</p>
-            <p class="text-gray-600 text-sm">Quantity: {{ item.quantity }}</p>
-            <p class="text-gray-500 text-xs">Date: {{ item.date }}</p>
-          </div>
-          <div class="flex space-x-2">
-            <router-link
-              :to="`/item-form/${item.id}`"
-              class="text-blue-600 hover:underline"
-            >
-              Edit
-            </router-link>
-            <button
-              @click="deleteItem(item.id)"
-              class="text-red-500 hover:underline"
-            >
-              Delete
-            </button>
-          </div>
-        </li>
-      </ul>
-    </div>
+          ➕ Add Item
+        </router-link>
+      </div>
 
-    <!-- Freezer Section -->
-    <div>
-      <h2 class="text-xl font-semibold mb-2">❄️ Freezer</h2>
-      <ul>
-        <li
-          v-for="item in freezerItems"
-          :key="item.id"
-          class="bg-white rounded p-4 mb-2 shadow flex justify-between"
-        >
-          <div>
-            <p class="font-semibold">{{ item.name }}</p>
-            <p class="text-gray-600 text-sm">Quantity: {{ item.quantity }}</p>
-            <p class="text-gray-500 text-xs">Date: {{ item.date }}</p>
+      <!-- Fridge Section -->
+      <div class="mb-10">
+        <h2 class="text-2xl font-semibold text-gray-700 mb-4">🧺 Fridge</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div
+            v-for="item in fridgeItems"
+            :key="item.id"
+            class="bg-white shadow-lg rounded-xl p-4 hover:shadow-xl transition"
+          >
+            <div class="flex justify-between items-start">
+              <div>
+                <p class="text-lg font-bold text-gray-800">{{ item.name }}</p>
+                <p class="text-sm text-gray-600">Quantity: {{ item.quantity }}</p>
+                <p class="text-xs text-gray-500">Date: {{ item.date }}</p>
+              </div>
+              <div class="flex flex-col space-y-2 text-sm text-right">
+                <button
+                  @click="editItem(item)"
+                  class="text-blue-600 hover:underline"
+                >
+                  Edit
+                </button>
+                <button
+                  @click="deleteItem(item.id)"
+                  class="text-red-500 hover:underline"
+                >
+                  Delete
+                </button>
+              </div>
+            </div>
           </div>
-          <div class="flex space-x-2">
-            <router-link
-              :to="`/item-form/${item.id}`"
-              class="text-blue-600 hover:underline"
-            >
-              Edit
-            </router-link>
-            <button
-              @click="deleteItem(item.id)"
-              class="text-red-500 hover:underline"
-            >
-              Delete
-            </button>
+        </div>
+      </div>
+
+      <!-- Freezer Section -->
+      <div>
+        <h2 class="text-2xl font-semibold text-gray-700 mb-4">❄️ Freezer</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div
+            v-for="item in freezerItems"
+            :key="item.id"
+            class="bg-white shadow-lg rounded-xl p-4 hover:shadow-xl transition"
+          >
+            <div class="flex justify-between items-start">
+              <div>
+                <p class="text-lg font-bold text-gray-800">{{ item.name }}</p>
+                <p class="text-sm text-gray-600">Quantity: {{ item.quantity }}</p>
+                <p class="text-xs text-gray-500">Date: {{ item.date }}</p>
+              </div>
+              <div class="flex flex-col space-y-2 text-sm text-right">
+                <button
+                  @click="editItem(item)"
+                  class="text-blue-600 hover:underline"
+                >
+                  Edit
+                </button>
+                <button
+                  @click="deleteItem(item.id)"
+                  class="text-red-500 hover:underline"
+                >
+                  Delete
+                </button>
+              </div>
+            </div>
           </div>
-        </li>
-      </ul>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -92,6 +98,9 @@ export default {
     };
   },
   methods: {
+    editItem(item) {
+      this.$router.push({ name: "EditItem", params: { id: item.id } });
+    },
     deleteItem(id) {
       this.fridgeItems = this.fridgeItems.filter(item => item.id !== id);
       this.freezerItems = this.freezerItems.filter(item => item.id !== id);

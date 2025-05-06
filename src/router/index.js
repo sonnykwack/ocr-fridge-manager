@@ -17,17 +17,18 @@ const routes = [
     path: '/',
     component: LayoutWrapper,
     children: [
+      { path: '', redirect: '/inventory' },
       { path: 'inventory', component: InventoryPage },
       { path: 'ocr-upload', component: OCRUpload },
+      { path: 'item-form/:id', name: 'EditItem', component: ItemFormPage },
+      { path: 'item-form', name: 'AddItem', component: ItemFormPage },
       { path: 'ocr-detail', component: OCRDetailPage },
       { path: 'recipes', component: RecipeSuggestionPage },
-      { path: 'account', component: AccountPage },
-      { path: 'item-form/:id', name: 'EditItem', component: ItemFormPage },
-      { path: 'item-form', name: 'AddItem', component: ItemFormPage }
+      { path: 'account', component: AccountPage }
     ]
   },
   {
-    path: '/:pathMatch(.*)*',
+    path: '/:catchAll(.*)',
     redirect: '/login'
   }
 ]

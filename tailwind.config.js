@@ -4,8 +4,18 @@ module.exports = {
       "./src/**/*.{vue,js,ts,jsx,tsx}"
     ],
     theme: {
-      extend: {},
+      extend: {
+        fontFamily: {
+          sans: ['Inter', 'sans-serif'],
+        },
+      },
     },
-    plugins: [],
+    plugins: [
+      require('@tailwindcss/forms'),
+      require('@tailwindcss/typography'),
+      require('@tailwindcss/aspect-ratio'),
+      require('@tailwindcss/line-clamp'),
+    ],
+    
   }
   
